@@ -56,5 +56,5 @@ class Circuit_manager:
         self.app.hide()
 
     def stop_GUI(self):
-        self.app.quit()
+        self.app.close()
         self.GUI_running = False

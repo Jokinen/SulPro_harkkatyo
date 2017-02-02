@@ -15,6 +15,8 @@ class info_display(Tk):
         self.news_API = news_API()
         self.circuit = circuit_interface()
         self.visible = True
+        self.focus_force()
+        self.bind('<Escape>', self.close)
         self.initialize()
 
     def initialize(self):
@@ -161,5 +163,6 @@ class info_display(Tk):
     def hide(self):
         self.visible = False
 
-    def quit(self):
+    def close(self):
+        print("called")
         self.destroy()
