@@ -48,7 +48,7 @@ class info_display(Tk):
             self.local_weather.delete(ALL)
             self.room_temperature.delete(ALL)
 
-            self.draw_headlines.delete(ALL)
+            self.headlines.delete(ALL)
 
         self.after(1000, self.draw) # refresh every 1000ms (1s)
 
