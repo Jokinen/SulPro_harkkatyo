@@ -14,6 +14,7 @@ class info_display(Tk):
         self.weather_API = weather_API()
         self.news_API = news_API()
         self.circuit = circuit_interface()
+        self.visible = True
         self.initialize()
 
     def initialize(self):
@@ -25,14 +26,25 @@ class info_display(Tk):
         self.grid_columnconfigure(1, weight=1)
 
         self.init_datetime()
-        self.draw_datetime()
-        self.draw_local_weather()
-        self.draw_room_temperature()
+        self.init_local_weather()
+        self.init_room_temperature()
 
-        self.draw_headlines()
+        self.init_headlines()
+
+        self.draw()
+
+    def draw(self):
+        if self.visible:
+            self.draw_datetime()
+            self.draw_local_weather()
+            self.draw_room_temperature()
+
+            self.draw_headlines()
+
+        self.after(1000, self.draw) # refresh every 1000ms (1s)
 
     def set_fullScreen(self):
-        w, h = self.winfo_screenwidth() - 100, self.winfo_screenheight() - 100
+        w, h = self.winfo_screenwidth(), self.winfo_screenheight()
         self.overrideredirect(1)
         self.geometry("%dx%d+0+0" % (w, h))
 
@@ -61,53 +73,69 @@ class info_display(Tk):
         datetime = current_date + " " + current_time
         self.datetime_w.create_text(20, 52, text=datetime, font=(None, 24), anchor="w")
 
-        self.after(1000, self.draw_datetime) # refresh every 1000ms (1s)
-
-    def draw_local_weather(self):
+    def init_local_weather(self):
         width = 400
         height = 170
 
-        w = Canvas(self, width=width, height=height)
-        w.grid(column=0, row=1, sticky='NW')
+        self.local_weather = Canvas(self, width=width, height=height)
+        self.local_weather.grid(column=0, row=1, sticky='NW')
 
-        w.create_rectangle(4, 4, width+1, height+1) # borders
+    def draw_local_weather(self):
+        self.local_weather.delete(ALL)
+
+        width = 400
+        height = 170
+
+        self.local_weather.create_rectangle(4, 4, width+1, height+1) # borders
 
         # City label
-        w.create_text(20, 30, text="Kaupunki", anchor="w")
-        w.create_text(20, 52, text="Turku", font=(None, 24), anchor="w")
+        self.local_weather.create_text(20, 30, text="Kaupunki", anchor="w")
+        self.local_weather.create_text(20, 52, text="Turku", font=(None, 24), anchor="w")
 
         # Current temp
-        w.create_text(20, 92, text="Lämpötila ulkona nyt", anchor="w")
+        self.local_weather.create_text(20, 92, text="Lämpötila ulkona nyt", anchor="w")
         temp = self.weather_data["Temperature"]["Metric"]["Value"]
         formatted_temp = str(temp) + " C"
-        w.create_text(20, 124, text=formatted_temp, font=(None, 40), anchor="w")
+        self.local_weather.create_text(20, 124, text=formatted_temp, font=(None, 40), anchor="w")
 
-    def draw_room_temperature(self):
+    def init_room_temperature(self):
         width = 400
         height = 100
 
-        w = Canvas(self, width=width, height=height)
-        w.grid(column=0, row=2, sticky='NW')
+        self.room_temperature = Canvas(self, width=width, height=height)
+        self.room_temperature.grid(column=0, row=2, sticky='NW')
 
-        w.create_rectangle(4, 4, width+1, height+1) # borders
+    def draw_room_temperature(self):
+        self.room_temperature.delete(ALL)
+
+        width = 400
+        height = 100
+
+        self.room_temperature.create_rectangle(4, 4, width+1, height+1) # borders
 
         # Temp label
-        w.create_text(20, 30, text="Lämpötila huoneessa", anchor="w")
+        self.room_temperature.create_text(20, 30, text="Lämpötila huoneessa", anchor="w")
         temp = self.temperature
         formatted_temp = str(temp) + " C"
-        w.create_text(20, 62, text=formatted_temp, font=(None, 40), anchor="w")
+        self.room_temperature.create_text(20, 62, text=formatted_temp, font=(None, 40), anchor="w")
+
+    def init_headlines(self):
+        width = 400
+        height = self.winfo_screenheight()
+
+        self.headlines = Canvas(self, width=width, height=height)
+        self.headlines.grid(column=1, row=0, rowspan=4, sticky='NE')
 
     def draw_headlines(self):
+        self.headlines.delete(ALL)
+
         width = 400
-        height = 520
+        height = self.winfo_screenheight()
 
-        w = Canvas(self, width=width, height=height)
-        w.grid(column=1, row=0, rowspan=4, sticky='NE')
-
-        w.create_rectangle(4, 4, width+1, height+1) # borders
+        self.headlines.create_rectangle(4, 4, width+1, height+1) # borders
 
         # Label for source
-        w.create_text(20, 30, text="Uusimat otsikot The Next Web julkaisusta", anchor="w")
+        self.headlines.create_text(20, 30, text="Uusimat otsikot The Next Web julkaisusta", anchor="w")
 
         article_height = 60
 
@@ -115,9 +143,9 @@ class info_display(Tk):
             x = article_height
             title = article["title"]
 
-            text = w.create_text(20, x, text=title, anchor="w", width=360, font=(None, 15))
+            text = self.headlines.create_text(20, x, text=title, anchor="w", width=360, font=(None, 15))
 
-            bounds = w.bbox(text)
+            bounds = self.headlines.bbox(text)
             height = bounds[3] - bounds[1]
 
             if i == 0:
@@ -126,6 +154,12 @@ class info_display(Tk):
                 padding = 10
 
             article_height += height + padding
+
+    def show(self):
+        self.visible = True
+
+    def hide(self):
+        self.visible = False
 
     def quit(self):
         self.destroy()
