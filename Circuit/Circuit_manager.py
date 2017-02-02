@@ -18,8 +18,9 @@ class Circuit_manager:
         self.motion_sensor_pin = 16
         self.pir_state = 0
 
-        self.start_GUI()
         self.GUI_running = False
+
+        self.start_GUI()
 
         if not self.dev_mode:
             self.setup()
@@ -29,6 +30,10 @@ class Circuit_manager:
         GPIO.setup(self.motion_sensor_pin, GPIO.IN)
 
     def loop(self):
+        if self.GUI_running is True:
+            self.app.update_idletasks()
+            self.app.update()
+
         if self.dev_mode:
             return
 
@@ -46,11 +51,9 @@ class Circuit_manager:
         self.app = info_display.info_display(None)
         self.app.title('SulPro harkkatyö')
         self.GUI_running = True
-        self.app.mainloop()
 
     def show_GUI(self):
         self.app.show()
-        self.app.mainloop()
 
     def hide_GUI(self):
         self.app.hide()
