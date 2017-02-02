@@ -39,7 +39,6 @@ class info_display(Tk):
     def get_data(self):
         self.weather_data = self.weather_API.get_current_conditions()[0]
         self.news_data = self.news_API.get_the_next_web_articles()
-        self.display_on = self.circuit.movement_detected
         self.temperature = self.circuit.temperature
 
     def init_datetime(self):
