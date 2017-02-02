@@ -40,11 +40,11 @@ class Circuit_manager:
         val = GPIO.input(self.motion_sensor_pin)
         if val == 1 and self.pir_state == 0:
             print "Motion detected"
-            pir_state = 1
+            self.pir_state = 1
             self.show_GUI()
-        elif val== 0 and self.pir_state == 1:
+        elif val == 0 and self.pir_state == 1:
             print "Motion ended"
-            pir_state = 0
+            self.pir_state = 0
             self.hide_GUI()
 
     def start_GUI(self):
