@@ -50,6 +50,7 @@ class Circuit_manager:
     def start_GUI(self):
         self.app = info_display.info_display(None)
         self.app.title('SulPro harkkatyö')
+        self.hide_GUI()
         self.GUI_running = True
 
     def show_GUI(self):
