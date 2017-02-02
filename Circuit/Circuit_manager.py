@@ -25,7 +25,7 @@ class Circuit_manager:
 
     def setup(self):
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(motion_sensor_pin, GPIO.IN)
+        GPIO.setup(self.motion_sensor_pin, GPIO.IN)
 
     def loop(self):
         if self.dev_mode:
