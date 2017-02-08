@@ -16,12 +16,9 @@ class Circuit_manager:
         self.dev_mode = DEV
 
         self.PIR = PIR_manager()
-
-        self.motion_sensor_pin = 16
         self.pir_state = 0
 
         self.GUI_running = False
-
         self.start_GUI()
 
         if not self.dev_mode:
@@ -40,13 +37,14 @@ class Circuit_manager:
             return
 
         val = self.PIR.read_status()
-        movement_detected = val > (255/2)
+        movement_begun = val > (255/2)
+        movement_ended = not movement_begun
 
-        if movement_detected and self.pir_state == 0:
+        if movement_ended and self.pir_state == 0:
             print "Motion detected " + str(val)
             self.pir_state = 1
             self.show_GUI()
-        elif not movement_detected and self.pir_state == 1:
+        elif not movement_ended and self.pir_state == 1:
             print "Motion ended " + str(val)
             self.pir_state = 0
             self.hide_GUI()
