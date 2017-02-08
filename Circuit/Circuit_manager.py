@@ -15,6 +15,8 @@ class Circuit_manager:
         global DEV
         self.dev_mode = DEV
 
+        self.PIR = PIR_manager()
+
         self.motion_sensor_pin = 16
         self.pir_state = 0
 
@@ -37,12 +39,14 @@ class Circuit_manager:
         if self.dev_mode:
             return
 
-        val = GPIO.input(self.motion_sensor_pin)
-        if val == 1 and self.pir_state == 0:
+        val = self.PIR.read_status()
+        movement_detected = val > (255/2)
+
+        if movement_detected and self.pir_state == 0:
             print "Motion detected " + str(val)
             self.pir_state = 1
             self.show_GUI()
-        elif val == 0 and self.pir_state == 1:
+        elif movement_detected and self.pir_state == 1:
             print "Motion ended " + str(val)
             self.pir_state = 0
             self.hide_GUI()
