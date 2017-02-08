@@ -46,7 +46,7 @@ class Circuit_manager:
             print "Motion detected " + str(val)
             self.pir_state = 1
             self.show_GUI()
-        elif movement_detected and self.pir_state == 1:
+        elif not movement_detected and self.pir_state == 1:
             print "Motion ended " + str(val)
             self.pir_state = 0
             self.hide_GUI()
