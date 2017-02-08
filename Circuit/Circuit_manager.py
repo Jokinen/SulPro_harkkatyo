@@ -17,6 +17,7 @@ class Circuit_manager:
 
         self.PIR = PIR_manager()
         self.pir_state = 0
+        self.movement_ongoing = False
 
         self.GUI_running = False
         self.start_GUI()
@@ -39,14 +40,19 @@ class Circuit_manager:
         movement_begun = val > (255/2)
         movement_ended = not movement_begun
 
-        if movement_ended and self.pir_state == 0:
+        if (movement_ended and self.movement_ongoing) and self.pir_state == 0:
             print "Motion detected, interface not active, showing GUI" + str(val)
             self.pir_state = 1
             self.show_GUI()
-        elif not movement_ended and self.pir_state == 1:
+            self.movement_ongoing = False
+        elif (not movement_ended and self.movement_ongoing) and self.pir_state == 1:
             print "Motion ended, interface active, hiding GUI" + str(val)
             self.pir_state = 0
             self.hide_GUI()
+            self.movement_ongoing = False
+
+        if movement_begun:
+            self.movement_ongoing = True
 
     def start_GUI(self):
         self.app = info_display.info_display(None)
