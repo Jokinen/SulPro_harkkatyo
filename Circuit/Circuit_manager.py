@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-1 -*-
-
+from PIR_manager import PIR_manager
 try:
     import RPi.GPIO as GPIO
     DEV = False
