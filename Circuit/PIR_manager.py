@@ -10,9 +10,9 @@ class PIR_manager:
 
     def setup(self):
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(SPI_CLK, GPIO.OUT)
-        GPIO.setup(SPI_CS, GPIO.OUT)
-        GPIO.setup(SPI_DATA, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
+        GPIO.setup(self.SPI_CLK, GPIO.OUT)
+        GPIO.setup(self.SPI_CS, GPIO.OUT)
+        GPIO.setup(self.SPI_DATA, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
     def read_status():
         clk = self.SPI_CLK
