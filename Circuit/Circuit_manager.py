@@ -46,12 +46,12 @@ class Circuit_manager:
 
         if (movement_ended and self.movement_ongoing) and self.pir_state == 0:
             print "Motion ended, interface active, hiding GUI" + str(val)
-            self.pir_state = 0
+            self.pir_state = 1
             self.hide_GUI()
             self.movement_ongoing = False
         elif (movement_ended and self.movement_ongoing) and self.pir_state == 1:
             print "Motion detected, interface not active, showing GUI" + str(val)
-            self.pir_state = 1
+            self.pir_state = 0
             self.show_GUI()
             self.movement_ongoing = False
 
