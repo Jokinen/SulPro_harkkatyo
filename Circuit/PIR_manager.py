@@ -14,7 +14,7 @@ class PIR_manager:
         GPIO.setup(self.SPI_CS, GPIO.OUT)
         GPIO.setup(self.SPI_DATA, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
-    def read_status():
+    def read_status(self):
         clk = self.SPI_CLK
         cs = self.SPI_CS
         data = self.SPI_DATA
