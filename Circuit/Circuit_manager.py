@@ -26,7 +26,6 @@ class Circuit_manager:
 
     def setup(self):
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.motion_sensor_pin, GPIO.IN)
 
     def loop(self):
         if self.GUI_running is True:
@@ -41,11 +40,11 @@ class Circuit_manager:
         movement_ended = not movement_begun
 
         if movement_ended and self.pir_state == 0:
-            print "Motion detected " + str(val)
+            print "Motion detected, interface not active, showing GUI" + str(val)
             self.pir_state = 1
             self.show_GUI()
         elif not movement_ended and self.pir_state == 1:
-            print "Motion ended " + str(val)
+            print "Motion ended, interface active, hiding GUI" + str(val)
             self.pir_state = 0
             self.hide_GUI()
 
