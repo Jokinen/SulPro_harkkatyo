@@ -20,7 +20,7 @@ class TEMP_manager:
         # TCN75A address, 0x48(72)
         # Read data back from 0x00(00), 2 bytes
         # temp MSB, temp LSB
-        self.data = self.bus.read_i2c_block_data(0x48, 0x00, 2)
+        data = self.bus.read_i2c_block_data(0x48, 0x00, 2)
 
         return data
 
