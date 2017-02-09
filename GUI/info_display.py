@@ -62,8 +62,6 @@ class info_display(Tk):
         self.news_data = self.news_API.get_the_next_web_articles()
         self.temperature = self.circuit.get_temperature()
 
-        print self.circuit.get_temperature()
-
     def init_datetime(self):
         width = 400
         height = 90
@@ -126,7 +124,7 @@ class info_display(Tk):
 
         # Temp label
         self.room_temperature.create_text(20, 30, text="Lämpötila huoneessa", anchor="w")
-        temp = self.temperature
+        temp = self.circuit.get_temperature()
         formatted_temp = str(temp) + " C"
         self.room_temperature.create_text(20, 62, text=formatted_temp, font=(None, 40), anchor="w")
 
