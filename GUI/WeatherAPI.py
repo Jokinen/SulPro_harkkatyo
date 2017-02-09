@@ -15,8 +15,8 @@ class weather_API:
     def get_current_conditions(self):
         query = "currentconditions/v1/" + self.city_id + ".json"
 
-        #return self.request_data(query)
-        return self.mock_data()
+        return self.request_data(query)
+        # return self.mock_data()
 
     def mock_data(self):
         # no unnecessary API request while devving
