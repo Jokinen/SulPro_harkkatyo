@@ -7,7 +7,7 @@ class TEMP_manager:
         self.setup()
 
     def setup(self):
-        bus = smbus.SMBus(1)    # I2C bus
+        bus = smbus.SMBus(0)    # I2C bus, using B rev1 so parameter is 0
 
         # TCN75A address, 0x48(72) (found with i2cdetect -y 0)
         # Select configuration register, 0x01(01)
