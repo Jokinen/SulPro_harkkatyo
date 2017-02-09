@@ -12,7 +12,7 @@ class TEMP_manager:
         # TCN75A address, 0x48(72) (found with i2cdetect -y 0)
         # Select configuration register, 0x01(01)
         #		0x60(96)	12-bit ADC resolution
-        bus.write_byte_data(0x48, 0x01, 0x60)
+        self.bus.write_byte_data(0x48, 0x01, 0x60)
 
         time.sleep(0.5)
 
