@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-1 -*-
+from Circuit.TEMP_manager import TEMP_manager
 try:
     import RPi.GPIO as GPIO
 except ImportError:
@@ -9,12 +10,10 @@ except ImportError:
 # Tässä on esimerkin vuoksi jotain koodia. Älä anna ohjata harhaan.
 class circuit_interface:
     def __init__(self):
-        self.pin_temp_pin = 0 # ??
-        self.temperature = 0
-        self.setup()
+        self.TEMP = TEMP_manager()
 
     def setup(self):
         pass
 
     def get_temperature(self):
-        return GPIO.input(self.pin_temp_pin)
+        return self.TEMP.get_temp_as_celsius()

@@ -62,6 +62,8 @@ class info_display(Tk):
         self.news_data = self.news_API.get_the_next_web_articles()
         self.temperature = self.circuit.temperature
 
+        print self.circuit.get_temperature()
+
     def init_datetime(self):
         width = 400
         height = 90
