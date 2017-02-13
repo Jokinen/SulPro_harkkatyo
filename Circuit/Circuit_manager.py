@@ -37,9 +37,10 @@ class Circuit_manager:
             return
 
         val = self.PIR.read_status() # 0-255
+        print val # for demonstration
 
-        movement_begun = val >= 200 and not self.movement_ongoing
-        movement_ended = not movement_begun and self.movement_ongoing
+        movement_begun = val >= 230 and not self.movement_ongoing
+        movement_ended = val < 100 and self.movement_ongoing
 
         if movement_begun:
             self.movemet_ongoing = True
